@@ -1,1 +1,0 @@
-cmd_/home/duy/embedded_lab2/driver/lab2_driver.ko := arm-linux-gnueabihf-ld -r -EL --build-id=sha1  -T scripts/module.lds -o /home/duy/embedded_lab2/driver/lab2_driver.ko /home/duy/embedded_lab2/driver/lab2_driver.o /home/duy/embedded_lab2/driver/lab2_driver.mod.o;  true
