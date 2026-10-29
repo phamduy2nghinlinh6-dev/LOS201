@@ -1,0 +1,46 @@
+=== STEP 1: LOAD MODULES ===
+dev:    size   erasesize  name
+mtd0: 02000000 00001000 "BIOS"
+mtd1: 02000000 00004000 "NAND simulator partition 0"
+crw------- 1 root root 90, 0 Oct 30  2026 /dev/mtd0
+crw------- 1 root root 90, 1 Oct 30  2026 /dev/mtd0ro
+crw------- 1 root root 90, 2 Oct 30 01:29 /dev/mtd1
+crw------- 1 root root 90, 3 Oct 30 01:29 /dev/mtd1ro
+brw-rw---- 1 root disk 31, 0 Oct 30 01:29 /dev/mtdblock0
+brw-rw---- 1 root disk 31, 1 Oct 30 01:29 /dev/mtdblock1
+
+/dev/mtd:
+total 0
+drwxr-xr-x 2 root root 80 Oct 30 01:29 by-name
+
+=== STEP 2: MTD INFO & ERASE ===
+mtd0
+Name:                           BIOS
+Type:                           nor
+Eraseblock size:                4096 bytes, 4.0 KiB
+Amount of eraseblocks:          8192 (33554432 bytes, 32.0 MiB)
+Minimum input/output unit size: 1 byte
+Sub-page size:                  1 byte
+Character device major/minor:   90:0
+Bad blocks are allowed:         false
+Device is writable:             false
+
+flash_erase: error!: /dev/mtd0
+             error 13 (Permission denied)
+
+=== STEP 3: CREATE JFFS2 & WRITE ===
+nandwrite: error!: /dev/mtd0
+           error 13 (Permission denied)
+
+=== STEP 4: MOUNT & TEST PERSISTENCE ===
+mount: /mnt/jffs2: can't read superblock on /dev/mtdblock0.
+       dmesg(1) may have more information after failed mount system call.
+cat: /mnt/jffs2/hello.txt: No such file or directory
+umount: /mnt/jffs2: not mounted.
+mount: /mnt/jffs2: can't read superblock on /dev/mtdblock0.
+       dmesg(1) may have more information after failed mount system call.
+Runtime test line
+umount: /mnt/jffs2: not mounted.
+
+=== STEP 5: CLEANUP ===
+Completed MTD & JFFS2 test!

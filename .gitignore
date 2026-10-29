@@ -1,0 +1,12 @@
+# Bỏ qua các file trung gian khi build kernel module
+driver/*.o
+driver/*.mod
+driver/*.mod.c
+driver/*.mod.o
+driver/*.symvers
+driver/*.order
+driver/.*.cmd
+driver/.tmp_versions/
+
+# Bỏ qua các device node đặc biệt trong rootfs/dev (nếu có)
+rootfs/initramfs/dev/*
