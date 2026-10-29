@@ -1,4 +1,4 @@
-# Bỏ qua các file trung gian khi build kernel module
+# Build artifacts
 driver/*.o
 driver/*.mod
 driver/*.mod.c
@@ -8,5 +8,5 @@ driver/*.order
 driver/.*.cmd
 driver/.tmp_versions/
 
-# Bỏ qua các device node đặc biệt trong rootfs/dev (nếu có)
+# Device nodes
 rootfs/initramfs/dev/*
