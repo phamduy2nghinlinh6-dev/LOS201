@@ -3,6 +3,11 @@
 # Embedded Linux Systems — LAB 01
 ### Cross-Toolchain, U-Boot Bootloader, Linux Kernel & BusyBox RootFS
 
+[![English](https://img.shields.io/badge/Language-English%20(Current)-007ec6?style=flat-square)](README.md)
+[![Vietnamese](https://img.shields.io/badge/Ngôn%20ngữ-Tiếng%20Việt-e05d44?style=flat-square)](README.vi.md)
+
+<br>
+
 ![Architecture](https://img.shields.io/badge/ARCHITECTURE-ARMv7%20Cortex--A9-007ec6?style=for-the-badge&logo=arm&logoColor=white)
 ![Bootloader](https://img.shields.io/badge/U--BOOT-2022.04-orange?style=for-the-badge)
 ![Linux](https://img.shields.io/badge/LINUX%20KERNEL-5.15%20LTS-fe7d37?style=for-the-badge&logo=linux&logoColor=white)
@@ -15,14 +20,14 @@
 
 ## 1. Overview
 
-This directory contains the complete implementation of **LAB-01: Building an Embedded Linux System from Scratch** targeting the **ARMv7 Cortex-A9 (`QEMU vexpress-a9`)** platform. The project covers setting up the cross-compilation toolchain, building the U-Boot bootloader, compiling the Linux 5.15 LTS kernel with Device Tree blobs, and constructing a minimal root filesystem (`initramfs`) powered by BusyBox.
+This directory contains the complete implementation of **LAB-01: Building an Embedded Linux System from Scratch** targeting the **ARMv7 Cortex-A9 (QEMU vexpress-a9)** platform. The project covers configuring the cross-compilation toolchain, building the U-Boot bootloader, compiling the Linux 5.15 LTS kernel with Device Tree blobs, and constructing a minimal root filesystem (initramfs) powered by BusyBox.
 
 | Component | Version / Target | Status |
 | :--- | :--- | :---: |
-| **Cross-Compiler Toolchain** | `arm-linux-gnueabihf-gcc` (ARMv7-A hard-float) | Completed |
-| **Bootloader (U-Boot)** | U-Boot `2022.04` (`vexpress_ca9x4_defconfig`) | Completed |
-| **Linux Kernel & DTB** | Linux `5.15 LTS` (`zImage` & `vexpress-v2p-ca9.dtb`) | Completed |
-| **Root Filesystem** | BusyBox `1.35.0` static build (`initramfs.cpio.gz`) | Completed |
+| **Cross-Compiler Toolchain** | arm-linux-gnueabihf-gcc (ARMv7-A hard-float) | Completed |
+| **Bootloader (U-Boot)** | U-Boot 2022.04 (vexpress_ca9x4_defconfig) | Completed |
+| **Linux Kernel & DTB** | Linux 5.15 LTS (zImage & vexpress-v2p-ca9.dtb) | Completed |
+| **Root Filesystem** | BusyBox 1.35.0 static build (initramfs.cpio.gz) | Completed |
 
 ---
 
@@ -55,7 +60,7 @@ This directory contains the complete implementation of **LAB-01: Building an Emb
     +-----------------------------------------------------------------------+
     |                       Stage 4: User Space Shell                       |
     |                 Runs /etc/init.d/rcS -> Opens /bin/sh                 |
-    +-----------------------------------------------------------------------+
+    +-----------------------------------+-----------------------------------+
 
 ---
 
@@ -73,7 +78,8 @@ This directory contains the complete implementation of **LAB-01: Building an Emb
     │   └── initramfs.cpio.gz              # Compressed initial RAM filesystem
     ├── rootfs/
     │   └── initramfs/                     # Root filesystem hierarchy (bin, sbin, etc, proc, sys)
-    └── README.md                          # Lab 1 documentation (English)
+    ├── README.md                          # Documentation (English)
+    └── README.vi.md                       # Documentation (Vietnamese)
 
 ---
 
