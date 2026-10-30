@@ -1,0 +1,6 @@
+# Perf raw data & temporary files
+logs/*.data
+logs/*.old
+rootfs/initramfs/dev/*
+*.o
+*.swp
