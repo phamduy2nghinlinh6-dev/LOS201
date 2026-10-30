@@ -1,0 +1,9 @@
+driver/*.o
+driver/*.mod
+driver/*.mod.c
+driver/*.mod.o
+driver/*.symvers
+driver/*.order
+driver/.*.cmd
+driver/.tmp_versions/
+rootfs/initramfs/dev/*
