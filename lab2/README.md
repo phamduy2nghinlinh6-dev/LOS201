@@ -1,38 +1,38 @@
 <div align="center">
 
-# Embedded Linux Systems — LAB 02
-### Character Device Driver, Virtual Filesystems (procfs/sysfs), MTD/JFFS2 & BusyBox Init
+# Hệ thống Linux Nhúng — LAB 02
+### Viết Character Device Driver, Giao tiếp procfs/sysfs, MTD/JFFS2 & BusyBox Init
 
-![Architecture](https://img.shields.io/badge/ARCHITECTURE-ARMv7%20Cortex--A9-007ec6?style=for-the-badge&logo=arm&logoColor=white)
+![Architecture](https://img.shields.io/badge/KIẾN%20TRÚC-ARMv7%20Cortex--A9-007ec6?style=for-the-badge&logo=arm&logoColor=white)
 ![Linux](https://img.shields.io/badge/LINUX%20KERNEL-5.15%20LTS-fe7d37?style=for-the-badge&logo=linux&logoColor=white)
 ![QEMU](https://img.shields.io/badge/QEMU-vexpress--a9-97ca00?style=for-the-badge&logo=qemu&logoColor=white)
 ![Driver](https://img.shields.io/badge/CHAR%20DEVICE-MAJOR%20240-8a2be2?style=for-the-badge)
 
-![procfs/sysfs](https://img.shields.io/badge/PROCFS%20%26%20SYSFS-VALIDATED-e05d44?style=for-the-badge)
-![JFFS2/MTD](https://img.shields.io/badge/MTD%20%2F%20JFFS2-PERSISTENCE%20TESTED-dfb317?style=for-the-badge)
-![BusyBox](https://img.shields.io/badge/BUSYBOX%20INIT-AUTO--LOADED-2ea44f?style=for-the-badge)
+![procfs/sysfs](https://img.shields.io/badge/PROCFS%20%26%20SYSFS-ĐÃ%20KIỂM%20CHỨNG-e05d44?style=for-the-badge)
+![JFFS2/MTD](https://img.shields.io/badge/MTD%20%2F%20JFFS2-BỀN%20VỮNG%20DỮ%20LIỆU-dfb317?style=for-the-badge)
+![BusyBox](https://img.shields.io/badge/BUSYBOX%20INIT-TỰ%20ĐỘNG%20NẠP-2ea44f?style=for-the-badge)
 
 </div>
 
 ---
 
-## 1. Giới thiệu tổng quan (Overview)
+## 1. Giới thiệu tổng quan
 
-Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device Driver & Quản lý File System** trên nền tảng nhúng **ARMv7 Cortex-A9 (QEMU vexpress-a9)**. Hệ thống bao gồm một Character Device Driver hoàn chỉnh trong không gian nhân (Kernel Space), giao tiếp hai chiều an toàn với không gian người dùng (User Space), xuất thông tin chẩn đoán thời gian thực qua procfs và sysfs, đồng thời mô phỏng bộ nhớ Flash NAND với hệ thống tệp JFFS2.
+Thư mục này chứa toàn bộ mã nguồn, cấu hình hệ thống tệp gốc (`rootfs`), kết quả đóng gói (`output`) và nhật ký kiểm thử (`logs`) của bài thực hành **LAB-02: Viết Device Driver & Quản lý File System** trên kiến trúc **ARMv7 Cortex-A9 (`QEMU vexpress-a9`)**.
 
-| Phân hệ | Nội dung triển khai | Trạng thái |
+| Phần thực hành | Nội dung triển khai | Kết quả |
 | :--- | :--- | :---: |
-| **Phần A — Character Device Driver** | Xây dựng lab2_driver.ko (Major 240), hỗ trợ open, read, write, release, đồng bộ hóa bằng mutex và truyền dữ liệu qua copy_to_user() / copy_from_user(). | Đạt |
-| **Phần B — Giao tiếp procfs & sysfs** | Tạo /proc/lab2_info (dùng seq_file API) và nhóm thuộc tính /sys/class/lab2_class/lab2/{buffer_len,open_count,last_data}. | Đạt |
-| **Phần C — MTD Subsystem & JFFS2** | Giả lập NAND Flash 32MB qua nandsim, xóa block bằng flash_erase, đóng gói mkfs.jffs2, ghi nandwrite và kiểm chứng tính bền vững dữ liệu (persistence). | Đạt |
-| **Phần D — Tích hợp BusyBox Init** | Cấu hình /etc/inittab và /etc/init.d/rcS để tự động nạp module lab2_driver.ko và khởi tạo node /dev/lab2 ngay khi hệ thống boot. | Đạt |
+| **Phần A — Character Device Driver** | Xây dựng module `lab2_driver.ko` (Major `240`), hỗ trợ `open`, `read`, `write`, `release`, bảo vệ bộ đệm bằng `mutex` và truyền dữ liệu qua `copy_to_user()` / `copy_from_user()`. | Hoàn thành |
+| **Phần B — Giao tiếp procfs & sysfs** | Tạo giao diện thống kê `/proc/lab2_info` (dùng `seq_file` API) và các thuộc tính `/sys/class/lab2_class/lab2/{buffer_len,open_count,last_data}`. | Hoàn thành |
+| **Phần C — MTD Subsystem & JFFS2** | Giả lập bộ nhớ NAND Flash 32MB qua `nandsim`, xóa phân vùng với `flash_erase`, tạo image `mkfs.jffs2`, nạp bằng `nandwrite` và kiểm tra tính bền vững dữ liệu (persistence). | Hoàn thành |
+| **Phần D — Tích hợp BusyBox Init** | Cấu hình `/etc/inittab` và `/etc/init.d/rcS` để tự động nạp `lab2_driver.ko` và tạo thiết bị `/dev/lab2` ngay khi khởi động hệ thống. | Hoàn thành |
 
 ---
 
-## 2. Kiến trúc hệ thống (System Architecture)
+## 2. Sơ đồ kiến trúc hệ thống
 
     +--------------------------------------------------------------------------+
-    |                               USER SPACE                                 |
+    |                         KHÔNG GIAN NGƯỜI DÙNG (USER SPACE)               |
     |                                                                          |
     |   [ BusyBox Shell ]     [ test_driver.sh ]       [ test_procfs.sh ]      |
     |           |                     |                        |               |
@@ -41,7 +41,7 @@ Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device D
                 |                     |                        |
     ============v=====================v========================v================
     +--------------------------------------------------------------------------+
-    |                              KERNEL SPACE                                |
+    |                           KHÔNG GIAN NHÂN (KERNEL SPACE)                 |
     |                                                                          |
     |                    +-----------------------------+                       |
     |                    |  VFS (Virtual File System)  |                       |
@@ -52,14 +52,14 @@ Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device D
     |  +---------------+      +-------------------+      +------------------+  |
     |  |  /dev/lab2    |      |  /proc/lab2_info  |      | /sys/class/...   |  |
     |  | (Major: 240)  |      |  (seq_file API)   |      |  - buffer_len    |  |
-    |  | file_ops      |      |  Read-only stats  |      |  - open_count    |  |
+    |  | file_ops      |      |  Thống kê chỉ đọc |      |  - open_count    |  |
     |  +-------+-------+      +---------+---------+      |  - last_data     |  |
     |          |                        |                +---------+--------+  |
     |          +------------------------+--------------------------+           |
     |                                   v                                      |
     |                    +-----------------------------+                       |
     |                    |   device_buffer [1024 B]    |                       |
-    |                    |  Protected by: lab2_mutex   |                       |
+    |                    |  Đồng bộ bởi: lab2_mutex    |                       |
     |                    +-----------------------------+                       |
     |                                                                          |
     |  +--------------------------------------------------------------------+  |
@@ -69,20 +69,20 @@ Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device D
 
 ---
 
-## 3. Cấu trúc thư mục (Repository Structure)
+## 3. Cấu trúc thư mục
 
-    embedded-linux-lab2/
+    lab2/
     ├── driver/
     │   ├── lab2_driver.c                  # Mã nguồn C của Character Device Driver
     │   ├── Makefile                       # KBuild Makefile biên dịch chéo cho ARMv7
     │   └── lab2_driver.ko                 # Kernel module binary (ELF 32-bit ARM, 5.15.0)
     ├── logs/
     │   ├── boot_log.txt                   # Log khởi động QEMU & tự động nạp driver
-    │   ├── driver_test.txt                # Kết quả thực thi kịch bản test_driver.sh
+    │   ├── driver_test.txt                # Kết quả chạy kịch bản test_driver.sh
     │   ├── procfs_test.txt                # Kết quả kiểm thử giao diện /proc và /sys
     │   └── mtd_jffs2.txt                  # Log thao tác MTD, JFFS2 & kiểm tra persistence
     ├── output/
-    │   └── initramfs_lab2.cpio.gz         # Image rootfs đã đóng gói sẵn sàng boot trên QEMU
+    │   └── initramfs_lab2.cpio.gz         # Image rootfs đóng gói sẵn sàng boot trên QEMU
     ├── rootfs/
     │   └── initramfs/                     # Cây thư mục gốc BusyBox
     │       ├── etc/inittab                # Cấu hình tiến trình khởi tạo BusyBox init
@@ -90,12 +90,12 @@ Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device D
     │       ├── lib/modules/5.15.0/        # Chứa module lab2_driver.ko
     │       └── usr/bin/                   # Chứa test_driver.sh và test_procfs.sh
     ├── .gitignore                         # Danh sách loại trừ các file rác khi biên dịch
-    ├── README.md                          # Tài liệu hướng dẫn và mô tả dự án
+    ├── README.md                          # Tài liệu hướng dẫn và mô tả bài Lab 2 (Tiếng Việt)
     └── license.md                         # Giấy phép mã nguồn mở MIT
 
 ---
 
-## 4. Hướng dẫn Biên dịch & Chạy thử nghiệm (Build & Execution)
+## 4. Hướng dẫn Biên dịch & Chạy thực nghiệm
 
 ### 4.1. Biên dịch Kernel Module
     cd driver
@@ -106,19 +106,19 @@ Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device D
     cd rootfs/initramfs
     find . | cpio -H newc -o | gzip > ../../output/initramfs_lab2.cpio.gz
 
-### 4.3. Khởi chạy hệ thống trên QEMU
+### 4.3. Khởi động hệ thống trên QEMU
     qemu-system-arm \
       -M vexpress-a9 \
       -cpu cortex-a9 \
       -m 512M \
       -smp 2 \
       -nographic \
-      -kernel ~/embedded_lab1/lab1/output/zImage \
-      -dtb ~/embedded_lab1/lab1/output/vexpress-v2p-ca9.dtb \
+      -kernel ../lab1/output/zImage \
+      -dtb ../lab1/output/vexpress-v2p-ca9.dtb \
       -initrd output/initramfs_lab2.cpio.gz \
       -append 'console=ttyAMA0,115200 rdinit=/sbin/init mem=512M'
 
-### 4.4. Chạy các kịch bản kiểm thử trong QEMU Shell
+### 4.4. Các lệnh kiểm thử trong QEMU Shell
     lsmod
     ls -la /dev/lab2
     test_procfs.sh
@@ -126,18 +126,16 @@ Dự án này hiện thực hóa toàn bộ nội dung **LAB-02: Viết Device D
 
 ---
 
-## 5. Tóm tắt Phân tích Kỹ thuật (Technical Insights)
+## 5. Điểm nhấn Kỹ thuật & Phân tích
 
-| Chủ đề | Điểm cốt lõi |
-| :--- | :--- |
-| **copy_to/from_user vs memcpy** | Không gian địa chỉ User Space và Kernel Space tách biệt nhau. copy_to/from_user() kiểm tra tính hợp lệ của con trỏ người dùng (access_ok) và xử lý an toàn lỗi trang bộ nhớ (Page Fault) mà không gây Kernel Oops/Panic như memcpy(). |
-| **Đồng bộ hóa với Mutex** | Bảo vệ vùng nhớ dùng chung device_buffer và buffer_len khi nhiều tiến trình gọi write() đồng thời, ngăn chặn tình trạng Race Condition làm hỏng hoặc trộn lẫn dữ liệu. |
-| **procfs vs sysfs** | /proc phù hợp xuất báo cáo tổng hợp dạng văn bản (qua seq_file), trong khi /sys tuân thủ nghiêm ngặt quy tắc một giá trị trên mỗi tệp (one-value-per-file) gắn liền với mô hình phân cấp thiết bị kobject. |
-| **NAND Flash & JFFS2** | Flash NAND không cho phép ghi đè bit 0 thành 1 trực tiếp mà phải xóa theo từng khối (erase block). JFFS2 sử dụng cấu trúc ghi nhật ký tuần tự (log-structured) để gom dữ liệu mới vào vùng trống, kết hợp Wear Leveling bảo vệ tuổi thọ Flash. |
+* **An toàn bộ nhớ (`copy_to_user` / `copy_from_user`):** Kiểm tra quyền truy cập vùng nhớ User Space (`access_ok`) và xử lý ngoại lệ trang nhớ (Page Fault), ngăn ngừa lỗi sập nhân (**Kernel Panic**) so với việc dùng `memcpy()` thuần túy.
+* **Cơ chế khóa `Mutex` (`DEFINE_MUTEX`):** Ngăn chặn xung đột dữ liệu (**Race Condition**) khi nhiều tiến trình cùng mở và ghi vào `/dev/lab2` đồng thời.
+* **So sánh `procfs` và `sysfs`:** `/proc/lab2_info` sử dụng `seq_file` để xuất bảng tổng hợp trạng thái nhiều dòng, trong khi `/sys/class/lab2_class/lab2/` tuân thủ chuẩn mỗi thuộc tính một file độc lập gắn với đối tượng thiết bị `kobject`.
+* **Đặc tính Flash NAND & `JFFS2`:** Bộ nhớ NAND chỉ cho phép xóa theo khối (`erase block`) trước khi ghi trang mới. `JFFS2` giải quyết bằng kiến trúc ghi nhật ký tuần tự (*log-structured*) kèm cơ chế cân bằng hao mòn (**Wear Leveling**).
 
 ---
 
-## 6. Tác giả (Author)
+## 6. Thông tin tác giả
 * **Họ và tên:** Phạm Đặng Khánh Duy
-* **Môn học:** Embedded Linux Systems (LOS201)
+* **Môn học:** Hệ thống Linux Nhúng — Embedded Linux Systems (LOS201)
 * **Giấy phép:** MIT License ([license.md](license.md))
