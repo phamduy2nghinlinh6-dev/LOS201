@@ -1,0 +1,60 @@
+=== ASSIGNMENT-01 TASK 1: IOCTL DRIVER TEST    ===
+==================================================
+[1] Loading asgn1_driver.ko...
+asgn1_driver: loaded successfully (major=241, default_mode=ECHO)
+crw-------    1 root     root      241,   0 Oct 31 18:48 [1;35m/dev/asgn1[m
+
+[2] Testing IOCTL 4: ASGN1_GET_VERSION...
+/usr/bin/test_asgn1.sh: line 18: ioctl_helper: not found
+
+[3] Testing Default Mode 1 (Echo Mode)...
+asgn1_driver: device opened (open_count=1)
+asgn1_driver: write 15 bytes in mode 1 -> buffer_len=15
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=2)
+asgn1_driver: read 15 bytes (read_count=1)
+asgn1_driver: device closed
+Read back: [Hello Echo Mode]
+
+[4] Testing IOCTL 3: ASGN1_SET_MODE -> Mode 0 (Kernel Mode)...
+/usr/bin/test_asgn1.sh: line 27: ioctl_helper: not found
+asgn1_driver: device opened (open_count=3)
+asgn1_driver: write 17 bytes in mode 1 -> buffer_len=17
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=4)
+asgn1_driver: read 17 bytes (read_count=2)
+asgn1_driver: device closed
+Read back: [Hello Kernel Mode]
+
+[5] Testing IOCTL 2: ASGN1_GET_STATS...
+/usr/bin/test_asgn1.sh: line 33: ioctl_helper: not found
+
+[6] Testing IOCTL 1: ASGN1_RESET_BUFFER...
+/usr/bin/test_asgn1.sh: line 37: ioctl_helper: not found
+asgn1_driver: device opened (open_count=5)
+asgn1_driver: read 17 bytes (read_count=3)
+asgn1_driver: device closed
+Read back after reset (should be empty): [Hello Kernel Mode]
+/usr/bin/test_asgn1.sh: line 39: ioctl_helper: not found
+
+[7] Testing Invalid IOCTL Command (-ENOTTY)...
+/usr/bin/test_asgn1.sh: line 43: ioctl_helper: not found
+
+[8] Unloading asgn1_driver...
+asgn1_driver: unloaded successfully
+asgn1_driver: write 15 bytes in mode 1 -> buffer_len=15
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=2)
+asgn1_driver: read 15 bytes (read_count=1)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=3)
+asgn1_driver: write 17 bytes in mode 1 -> buffer_len=17
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=4)
+asgn1_driver: read 17 bytes (read_count=2)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=5)
+asgn1_driver: read 17 bytes (read_count=3)
+asgn1_driver: device closed
+asgn1_driver: unloaded successfully
+=== TASK 1 TEST COMPLETED SUCCESSFULLY ===

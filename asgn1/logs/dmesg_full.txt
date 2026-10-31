@@ -1,0 +1,97 @@
+Linux version 5.15.0 (duy@duy-HP-ZBook-Firefly-14-inch-G9-Mobile-Workstation-PC) (arm-linux-gnueabihf-gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, GNU ld (GNU Binutils for Ubuntu) 2.46) #1 SMP Thu Sep 24 10:51:18 +07 2026
+[1] Loading asgn1_driver.ko...
+asgn1_driver: loaded successfully (major=241, default_mode=ECHO)
+asgn1_driver: device opened (open_count=1)
+asgn1_driver: write 15 bytes in mode 1 -> buffer_len=15
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=2)
+asgn1_driver: read 15 bytes (read_count=1)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=3)
+asgn1_driver: write 17 bytes in mode 1 -> buffer_len=17
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=4)
+asgn1_driver: read 17 bytes (read_count=2)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=5)
+asgn1_driver: read 17 bytes (read_count=3)
+asgn1_driver: device closed
+[8] Unloading asgn1_driver...
+asgn1_driver: unloaded successfully
+asgn1_driver: write 15 bytes in mode 1 -> buffer_len=15
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=2)
+asgn1_driver: read 15 bytes (read_count=1)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=3)
+asgn1_driver: write 17 bytes in mode 1 -> buffer_len=17
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=4)
+asgn1_driver: read 17 bytes (read_count=2)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=5)
+asgn1_driver: read 17 bytes (read_count=3)
+asgn1_driver: device closed
+asgn1_driver: unloaded successfully
+[1] Loading counter_driver.ko...
+counter_driver: registered /dev/counter (major=10, minor=125) and /proc/counter_info
+counter_driver: read value=0 (new_val=1, total_reads=1)
+counter_driver: read value=1 (new_val=2, total_reads=2)
+counter_driver: read value=2 (new_val=3, total_reads=3)
+counter_driver: counter set to 100 (total_writes=1)
+counter_driver: read value=100 (new_val=101, total_reads=4)
+counter_driver: read value=101 (new_val=102, total_reads=5)
+counter_driver: counter set to 0 (total_writes=2)
+counter_driver: read value=0 (new_val=1, total_reads=6)
+counter_driver: invalid write input '-50' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: invalid write input 'abc' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+[9] Unloading counter_driver...
+counter_driver: unregistered successfully
+counter_driver: registered /dev/counter (major=10, minor=125) and /proc/counter_info
+counter_driver: read value=0 (new_val=1, total_reads=1)
+counter_driver: read value=1 (new_val=2, total_reads=2)
+counter_driver: read value=2 (new_val=3, total_reads=3)
+counter_driver: counter set to 100 (total_writes=1)
+counter_driver: read value=100 (new_val=101, total_reads=4)
+counter_driver: read value=101 (new_val=102, total_reads=5)
+counter_driver: counter set to 0 (total_writes=2)
+counter_driver: read value=0 (new_val=1, total_reads=6)
+counter_driver: invalid write input '-50' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: invalid write input 'abc' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: unregistered successfully
+Linux version 5.15.0 (duy@duy-HP-ZBook-Firefly-14-inch-G9-Mobile-Workstation-PC) (arm-linux-gnueabihf-gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0, GNU ld (GNU Binutils for Ubuntu) 2.46) #1 SMP Thu Sep 24 10:51:18 +07 2026
+asgn1_driver: loaded successfully (major=241, default_mode=ECHO)
+asgn1_driver: device opened (open_count=1)
+asgn1_driver: write 15 bytes in mode 1 -> buffer_len=15
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=2)
+asgn1_driver: read 15 bytes (read_count=1)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=3)
+asgn1_driver: write 17 bytes in mode 1 -> buffer_len=17
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=4)
+asgn1_driver: read 17 bytes (read_count=2)
+asgn1_driver: device closed
+asgn1_driver: device opened (open_count=5)
+asgn1_driver: read 17 bytes (read_count=3)
+asgn1_driver: device closed
+asgn1_driver: unloaded successfully
+counter_driver: registered /dev/counter (major=10, minor=125) and /proc/counter_info
+counter_driver: read value=0 (new_val=1, total_reads=1)
+counter_driver: read value=1 (new_val=2, total_reads=2)
+counter_driver: read value=2 (new_val=3, total_reads=3)
+counter_driver: counter set to 100 (total_writes=1)
+counter_driver: read value=100 (new_val=101, total_reads=4)
+counter_driver: read value=101 (new_val=102, total_reads=5)
+counter_driver: counter set to 0 (total_writes=2)
+counter_driver: read value=0 (new_val=1, total_reads=6)
+counter_driver: invalid write input '-50' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: invalid write input 'abc' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: unregistered successfully

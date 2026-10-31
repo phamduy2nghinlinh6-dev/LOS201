@@ -1,0 +1,72 @@
+=== ASSIGNMENT-01 TASK 2: MISC COUNTER TEST    ===
+==================================================
+[1] Loading counter_driver.ko...
+counter_driver: registered /dev/counter (major=10, minor=125) and /proc/counter_info
+crw-rw-rw-    1 root     root       10, 125 Oct 31 18:48 [1;35m/dev/counter[m
+
+[2] /proc/counter_info (Snapshot 1 - Initial State):
+=== Counter Device Statistics ===
+Device Node         : /dev/counter (Major 10, Minor 125)
+Current Counter     : 0
+Total Reads (Inc)   : 0
+Total Writes (Set)  : 0
+
+[3] Reading /dev/counter 3 times (auto-increment test):
+counter_driver: read value=0 (new_val=1, total_reads=1)
+  Read 1: 0
+counter_driver: read value=1 (new_val=2, total_reads=2)
+  Read 2: 1
+counter_driver: read value=2 (new_val=3, total_reads=3)
+  Read 3: 2
+
+[4] Writing '100' to /dev/counter...
+counter_driver: counter set to 100 (total_writes=1)
+counter_driver: read value=100 (new_val=101, total_reads=4)
+  Read after set 100: 100
+counter_driver: read value=101 (new_val=102, total_reads=5)
+  Next read (101)   : 101
+
+[5] /proc/counter_info (Snapshot 2 - After Reads & Write 100):
+=== Counter Device Statistics ===
+Device Node         : /dev/counter (Major 10, Minor 125)
+Current Counter     : 102
+Total Reads (Inc)   : 5
+Total Writes (Set)  : 1
+
+[6] Resetting counter to '0'...
+counter_driver: counter set to 0 (total_writes=2)
+counter_driver: read value=0 (new_val=1, total_reads=6)
+  Read after reset  : 0
+
+[7] /proc/counter_info (Snapshot 3 - After Reset):
+=== Counter Device Statistics ===
+Device Node         : /dev/counter (Major 10, Minor 125)
+Current Counter     : 1
+Total Reads (Inc)   : 6
+Total Writes (Set)  : 2
+
+[8] Testing Invalid Writes (negative & non-numeric -> expect -EINVAL)...
+counter_driver: invalid write input '-50' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+  -> Negative number correctly rejected (-EINVAL)
+counter_driver: invalid write input 'abc' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+  -> Non-numeric string correctly rejected (-EINVAL)
+
+[9] Unloading counter_driver...
+counter_driver: unregistered successfully
+counter_driver: registered /dev/counter (major=10, minor=125) and /proc/counter_info
+counter_driver: read value=0 (new_val=1, total_reads=1)
+counter_driver: read value=1 (new_val=2, total_reads=2)
+counter_driver: read value=2 (new_val=3, total_reads=3)
+counter_driver: counter set to 100 (total_writes=1)
+counter_driver: read value=100 (new_val=101, total_reads=4)
+counter_driver: read value=101 (new_val=102, total_reads=5)
+counter_driver: counter set to 0 (total_writes=2)
+counter_driver: read value=0 (new_val=1, total_reads=6)
+counter_driver: invalid write input '-50' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: invalid write input 'abc' (must be non-negative integer)
+counter_driver: invalid write input 'sh: write error: Invalid argume' (must be non-negative integer)
+counter_driver: unregistered successfully
+=== TASK 2 TEST COMPLETED SUCCESSFULLY ===
