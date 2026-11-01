@@ -25,5 +25,7 @@
 ---
 
 ## 👤 Author
-* **Student Name:** Phạm Đặng Khánh Duy
+* **Student Name:** 
+Phạm Đặng Khánh Duy
+Nguyễn Duy An
 * **Course:** Embedded Linux Systems (`LOS201`)
