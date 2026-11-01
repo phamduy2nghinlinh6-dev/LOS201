@@ -1,0 +1,7 @@
+=== SMS Sensor Driver Statistics ===
+read_count       : 0
+last_temperature : 25.0 C
+last_humidity    : 60.0 %
+min_interval_ms  : 100 ms
+driver_uptime    : 0 seconds
+

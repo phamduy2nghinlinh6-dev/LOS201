@@ -1,0 +1,10 @@
+*.o
+*.mod
+*.mod.c
+*.mod.o
+*.symvers
+*.order
+.*.cmd
+.tmp_versions/
+rootfs/initramfs/dev/*
+logs/*.data

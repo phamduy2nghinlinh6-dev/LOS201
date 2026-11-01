@@ -1,0 +1,25 @@
+Breakpoint 1 at 0x2eb0: file circular_buffer.c, line 34.
+Breakpoint 2 at 0x3820: file processor_thread.c, line 17.
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+__pthread_clockjoin_ex (threadid=0, thread_return=thread_return@entry=0x0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, cancel=cancel@entry=true) at ./nptl/pthread_join_common.c:47
+warning: 47	./nptl/pthread_join_common.c: No such file or directory
+  Id   Target Id                                       Frame 
+* 1    Thread 0x7ffff7fa2740 (LWP 14746) "sms_app_x86" __pthread_clockjoin_ex (threadid=0, thread_return=thread_return@entry=0x0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, cancel=cancel@entry=true) at ./nptl/pthread_join_common.c:47
+
+Thread 1 (Thread 0x7ffff7fa2740 (LWP 14746) "sms_app_x86"):
+#0  __pthread_clockjoin_ex (threadid=0, thread_return=thread_return@entry=0x0, clockid=clockid@entry=0, abstime=abstime@entry=0x0, cancel=cancel@entry=true) at ./nptl/pthread_join_common.c:47
+#1  0x00007ffff7ca5ca3 in ___pthread_join (threadid=<optimized out>, thread_return=thread_return@entry=0x0) at ./nptl/pthread_join.c:24
+#2  0x0000555555556b24 in main (argc=<optimized out>, argv=<optimized out>) at sms_app.c:126
+No symbol "cb" in current context.
+
+Program terminated with signal SIGSEGV, Segmentation fault.
+The program no longer exists.

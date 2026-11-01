@@ -1,0 +1,2 @@
+[2026-11-01 07:30:25] [RT] Sensor Thread configured with SCHED_FIFO priority 50
+[2026-11-01 07:30:25] [SAMPLE][1450] Temp=20.7C (Avg10=20.7C) Humid=75.9% (Avg10=75.9%)

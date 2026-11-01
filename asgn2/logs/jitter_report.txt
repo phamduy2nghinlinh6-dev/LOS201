@@ -1,0 +1,11 @@
+=== Jitter Analysis (SCHED_FIFO (Priority 50), samples=1499) ===
+  Min Latency : 7 us
+  Avg Latency : 72.04 us
+  P99 Latency : 230 us
+  Max Latency : 265 us
+  Text Histogram:
+    0 - 100 us    : 1005 samples
+    100 - 500 us  : 494 samples
+    500 - 1000 us : 0 samples
+    > 1000 us     : 0 samples
+
