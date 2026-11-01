@@ -24,8 +24,11 @@
 
 ---
 
-## 👤 Author
-* **Student Name:** 
-Phạm Đặng Khánh Duy
-Nguyễn Duy An
-* **Course:** Embedded Linux Systems (`LOS201`)
+## Team Members
+| Full Name | Student ID | Assigned Coursework |
+|---|---|---|
+| Nguyen Duy An | SE203864 | LAB01; Assignment 2|
+| Pham Dang Khanh Duy | SE203985 | Assignment 1; LAB2; LAB3|
+
+Repository owner and shared documentation maintainer: Pham Dang Khanh Duy
+
